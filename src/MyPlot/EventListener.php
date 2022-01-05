@@ -162,6 +162,7 @@ class EventListener implements Listener
             VanillaBlocks::TNT()->getId(),
             VanillaBlocks::REDSTONE_REPEATER()->getId(),
             VanillaBlocks::REDSTONE_COMPARATOR()->getId(),
+            VanillaBlocks::DRAGON_EGG()->getId(),
             BlockLegacyIds::CAMPFIRE,
             BlockLegacyIds::COMPOSTER,
             NewBlockIds::SOUL_CAMPFIRE,
@@ -175,7 +176,11 @@ class EventListener implements Listener
 
         $blockedItemIds = [
             VanillaItems::SHEARS()->getId(),
-            VanillaItems::FLINT_AND_STEEL()->getId()
+            VanillaItems::FLINT_AND_STEEL()->getId(),
+            VanillaItems::BUCKET()->getId(),
+            VanillaItems::MILK_BUCKET()->getId(),
+            VanillaItems::LAVA_BUCKET()->getId(),
+            VanillaItems::WATER_BUCKET()->getId()
         ];
 
         if ($event->getAction() === PlayerInteractEvent::RIGHT_CLICK_BLOCK && !in_array($blockId, $blockedBlockIds) && !in_array($itemId, $blockedItemIds))
