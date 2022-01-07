@@ -5,7 +5,6 @@ namespace MyPlot\subcommand;
 use MyPlot\forms\MyPlotForm;
 use MyPlot\forms\subforms\ClaimForm;
 use MyPlot\MyPlot;
-use pocketmine\block\VanillaBlocks;
 use pocketmine\command\CommandSender;
 use pocketmine\player\Player;
 use pocketmine\utils\TextFormat;
@@ -58,7 +57,6 @@ class ClaimSubCommand extends SubCommand
 			return true;
 		}
 		if($this->getPlugin()->claimPlot($plot, $sender->getName(), $name)) {
-            $this->getPlugin()->setBorder($plot, VanillaBlocks::SANDSTONE_SLAB());
 			$sender->sendMessage($this->translateString("claim.success"));
 		}else{
 			$sender->sendMessage(TextFormat::RED . $this->translateString("error"));
