@@ -131,7 +131,7 @@ class MyPlotGenerator extends Generator {
 			$Z = $totalSize - abs($z % $totalSize);
 		}
 		$startX = $X;
-		$shape = new \SplFixedArray(1024);
+		$shape = new \SplFixedArray(256);
 		for($z = 0; $z < 16; $z++, $Z++) {
 			if($Z === $totalSize) {
 				$Z = 0;
