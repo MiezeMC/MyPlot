@@ -430,15 +430,15 @@ class EventListener implements Listener
             $rating = $this->plugin->getRating($plot);
             if ($rating !== null) {
                 if ($rating == 1) {
-                    $popup = "§e★§7☆☆☆☆\n§r" . $popup;
+                    $popup = "          §e★§7☆☆☆☆\n§r" . $popup;
                 } elseif ($rating == 2) {
-                    $popup = "§e★★§7☆☆☆\n§r" . $popup;
+                    $popup = "          §e★★§7☆☆☆\n§r" . $popup;
                 } elseif ($rating == 3) {
-                    $popup = "§e★★★§7☆☆\n§r" . $popup;
+                    $popup = "          §e★★★§7☆☆\n§r" . $popup;
                 } elseif ($rating == 4) {
-                    $popup = "§e★★★★§7☆☆☆\n§r" . $popup;
+                    $popup = "          §e★★★★§7☆\n§r" . $popup;
                 } elseif ($rating == 5) {
-                    $popup = "§e★★★★★\n§r" . $popup;
+                    $popup = "          §e★★★★★\n§r" . $popup;
                 }
             }
 			$popup = TextFormat::WHITE . $paddingPopup . $popup . "\n" . TextFormat::WHITE . $paddingOwnerPopup . $ownerPopup;
