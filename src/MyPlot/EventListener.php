@@ -15,6 +15,7 @@ use pocketmine\block\Sapling;
 use pocketmine\block\utils\TreeType;
 use pocketmine\block\VanillaBlocks;
 use pocketmine\event\block\BlockBreakEvent;
+use pocketmine\event\block\BlockBurnEvent;
 use pocketmine\event\block\BlockPlaceEvent;
 use pocketmine\event\block\BlockSpreadEvent;
 use pocketmine\event\block\SignChangeEvent;
@@ -82,6 +83,11 @@ class EventListener implements Listener
 			}*/
 		}
 	}
+
+    public function onBurnBlock(BlockBurnEvent $event): void
+    {
+        $this->onEventOnBlock($event);
+    }
 
 	/**
 	 * @ignoreCancelled false
@@ -188,7 +194,7 @@ class EventListener implements Listener
 		$this->onEventOnBlock($event);
 	}
 
-	private function onEventOnBlock(BlockPlaceEvent|SignChangeEvent|PlayerInteractEvent|BlockBreakEvent $event) : void {
+	private function onEventOnBlock(BlockPlaceEvent|SignChangeEvent|PlayerInteractEvent|BlockBreakEvent|BlockBurnEvent $event) : void {
 		if(!$event->getBlock()->getPosition()->isValid())
 			return;
 		$levelName = $event->getBlock()->getPosition()->getWorld()->getFolderName();
