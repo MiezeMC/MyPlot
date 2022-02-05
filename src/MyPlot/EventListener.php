@@ -11,10 +11,15 @@ use MyPlot\events\MyPlotPvpEvent;
 use pocketmine\block\Block;
 use pocketmine\block\BlockLegacyIds;
 use pocketmine\block\BlockLegacyIds as BlockIds;
+use pocketmine\block\Dirt;
+use pocketmine\block\Grass;
+use pocketmine\block\GrassPath;
 use pocketmine\block\Liquid;
+use pocketmine\block\Log;
 use pocketmine\block\Sapling;
 use pocketmine\block\utils\TreeType;
 use pocketmine\block\VanillaBlocks;
+use pocketmine\block\Wood;
 use pocketmine\event\block\BlockBreakEvent;
 use pocketmine\event\block\BlockBurnEvent;
 use pocketmine\event\block\BlockPlaceEvent;
@@ -30,6 +35,7 @@ use pocketmine\event\world\WorldUnloadEvent;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\event\player\PlayerMoveEvent;
+use pocketmine\item\Hoe;
 use pocketmine\item\VanillaItems;
 use pocketmine\world\generator\GeneratorManager;
 use pocketmine\world\World as Level;
@@ -138,6 +144,12 @@ class EventListener implements Listener
         $blockId = $event->getBlock()->getId();
         $itemId = $event->getItem()->getId();
 
+        if ($event->getBlock() instanceof Wood) $this->onEventOnBlock($event);
+        if ($event->getBlock() instanceof Dirt) $this->onEventOnBlock($event);
+        if ($event->getBlock() instanceof Grass) $this->onEventOnBlock($event);
+        if ($event->getBlock() instanceof GrassPath) $this->onEventOnBlock($event);
+        if ($event->getItem() instanceof Hoe) $this->onEventOnBlock($event);
+
         $blockedBlockIds = [
             VanillaBlocks::CHEST()->getId(),
             VanillaBlocks::ENDER_CHEST()->getId(),
@@ -202,7 +214,7 @@ class EventListener implements Listener
         $plot = MyPlot::getInstance()->getPlotByPosition($ev->getBlock()->getPosition());
 
         if ($plot !== null && $player instanceof Player) {
-            if ($plot->owner !== $player->getName()) $ev->cancel();
+            if ($plot->owner !== $player->getName() && !$plot->isHelper($player->getName())) $ev->cancel();
         }
     }
 
