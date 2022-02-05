@@ -203,10 +203,10 @@ class Commands extends PluginsCommand
 		}
 		if(!isset($args[0])) {
 			$args[0] = "help";
-			if($sender instanceof Player and $plugin->getConfig()->get("UI Forms", true) === true) {
+			/*if($sender instanceof Player and $plugin->getConfig()->get("UI Forms", true) === true) {
 				$sender->sendForm(new MainForm($sender, $this->subCommands));
 				return true;
-			}
+			}*/
 		}
 		$subCommand = strtolower((string)array_shift($args));
 		if(isset($this->subCommands[$subCommand])) {
