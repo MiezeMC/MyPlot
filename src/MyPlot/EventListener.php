@@ -95,7 +95,7 @@ class EventListener implements Listener
 
     public function onBurnBlock(BlockBurnEvent $event): void
     {
-        $this->onEventOnBlock($event);
+        if ($this->plugin->getConfig()->get('AllowFireTicking', false) === false) $event->cancel();
     }
 
 	/**
