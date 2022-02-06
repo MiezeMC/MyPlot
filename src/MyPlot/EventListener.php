@@ -200,7 +200,8 @@ class EventListener implements Listener
             VanillaItems::BUCKET()->getId(),
             VanillaItems::MILK_BUCKET()->getId(),
             VanillaItems::LAVA_BUCKET()->getId(),
-            VanillaItems::WATER_BUCKET()->getId()
+            VanillaItems::WATER_BUCKET()->getId(),
+            VanillaItems::PAINTING()->getId()
         ];
 
         if ($event->getAction() === PlayerInteractEvent::RIGHT_CLICK_BLOCK && !in_array($blockId, $blockedBlockIds) && !in_array($itemId, $blockedItemIds))
