@@ -27,7 +27,10 @@ class BiomeSubCommand extends SubCommand
 	 *
 	 * @return bool
 	 */
-	public function execute(CommandSender $sender, array $args) : bool {
+	public function execute(CommandSender $sender, array $args) : bool
+    {
+        $sender->sendMessage("§cDiese Funktion ist aufgrund von Fehlern derzeit deaktiviert!");
+        return true;
 
 		if(count($args) === 0) {
 			$biomes = TextFormat::WHITE . implode(", ", array_keys(self::BIOMES));
