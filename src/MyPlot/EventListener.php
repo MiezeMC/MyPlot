@@ -191,7 +191,8 @@ class EventListener implements Listener
             NewBlockIds::CRIMSON_HYPHAE,
             NewBlockIds::WARPED_HYPHAE,
             NewBlockIds::CRIMSON_STEM,
-            NewBlockIds::WARPED_STEM
+            NewBlockIds::WARPED_STEM,
+            477 # sweet barries
         ];
 
         $blockedItemIds = [
