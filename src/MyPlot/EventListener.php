@@ -141,7 +141,7 @@ class EventListener implements Listener
 	 * @param PlayerInteractEvent $event
 	 */
 	public function onPlayerInteract(PlayerInteractEvent $event) : void {
-        $blockId = $event->getBlock()->getId();
+        /*$blockId = $event->getBlock()->getId();
         $itemId = $event->getItem()->getId();
 
         if ($event->getBlock() instanceof Wood) $this->onEventOnBlock($event);
@@ -206,7 +206,7 @@ class EventListener implements Listener
         ];
 
         if ($event->getAction() === PlayerInteractEvent::RIGHT_CLICK_BLOCK && !in_array($blockId, $blockedBlockIds) && !in_array($itemId, $blockedItemIds))
-            return;
+            return;*/
         $this->onEventOnBlock($event);
     }
 
