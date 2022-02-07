@@ -8,6 +8,7 @@ use MyPlot\events\MyPlotDisposeEvent;
 use MyPlot\events\MyPlotPlayerEnterPlotEvent;
 use MyPlot\events\MyPlotPlayerLeavePlotEvent;
 use MyPlot\events\MyPlotPvpEvent;
+use pocketmine\block\BaseSign;
 use pocketmine\block\Block;
 use pocketmine\block\BlockLegacyIds;
 use pocketmine\block\BlockLegacyIds as BlockIds;
@@ -205,8 +206,15 @@ class EventListener implements Listener
             VanillaItems::PAINTING()->getId()
         ];
 
+
         if ($event->getAction() === PlayerInteractEvent::RIGHT_CLICK_BLOCK && !in_array($blockId, $blockedBlockIds) && !in_array($itemId, $blockedItemIds))
             return;*/
+
+        if ($event->getItem() instanceof BaseSign) {
+            $event->uncancel();
+            return;
+        }
+
         $this->onEventOnBlock($event);
     }
 
