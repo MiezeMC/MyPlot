@@ -8,6 +8,7 @@ use MyPlot\Plot;
 use pocketmine\command\CommandSender;
 use pocketmine\player\Player;
 use pocketmine\utils\TextFormat;
+use supercrafter333\RedstoneGuard\PlotRedstoneManager;
 
 class InfoSubCommand extends SubCommand
 {
@@ -60,6 +61,10 @@ class InfoSubCommand extends SubCommand
 			$denied = implode(", ", $plot->denied);
 			$sender->sendMessage($this->translateString("info.denied", [TextFormat::GREEN . $denied]));
 			$sender->sendMessage($this->translateString("info.biome", [TextFormat::GREEN . $plot->biome]));
+            if ($this->getPlugin()->getServer()->getPluginManager()->getPlugin("RedstoneGuard-MMC") !== null) {
+                $isAllowed = PlotRedstoneManager::getInstance()->isRedstoneAllowed($plot);
+                $sender->sendMessage("Redstone: " . ($isAllowed ? "§aaktiviert" : "§cdeaktiviert"));
+            }
 		}
 		return true;
 	}

@@ -210,7 +210,7 @@ class EventListener implements Listener
         if ($event->getAction() === PlayerInteractEvent::RIGHT_CLICK_BLOCK && !in_array($blockId, $blockedBlockIds) && !in_array($itemId, $blockedItemIds))
             return;*/
 
-        if ($event->getItem() instanceof BaseSign) {
+        if ($event->getBlock() instanceof BaseSign) {
             $event->uncancel();
             return;
         }
