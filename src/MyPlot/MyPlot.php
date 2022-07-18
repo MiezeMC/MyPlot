@@ -35,6 +35,7 @@ use pocketmine\data\bedrock\LegacyBiomeIdToStringIdMap;
 use pocketmine\event\world\WorldLoadEvent;
 use pocketmine\lang\Language as BaseLang;
 use pocketmine\math\Facing;
+use pocketmine\Server;
 use pocketmine\world\biome\Biome;
 use pocketmine\world\biome\BiomeRegistry;
 use pocketmine\world\format\Chunk;
@@ -671,11 +672,19 @@ class MyPlot extends PluginBase
 		}
 		if($center)
 			return $this->teleportMiddle($player, $plot);
-		$plotLevel = $this->getLevelSettings($plot->levelName);
+		$plotWorld = $this->getLevelSettings($plot->levelName);
 		$pos = $this->getPlotPosition($plot);
-		$pos->x += floor($plotLevel->plotSize / 2);
+		$pos->x += floor($plotWorld->plotSize / 2);
 		$pos->y += 1.5;
 		$pos->z -= 1;
+		$world = Server::getInstance()->getWorldManager()->getWorldByName($plot->levelName);
+		if($world->getOrLoadChunkAtPosition($pos) === null) {
+			$world->orderChunkPopulation($pos->getFloorX() >> 4, $pos->getFloorZ() >> 4, null)->onCompletion(function ()use($player, $pos): void{
+			    if($player->isOnline()) $player->teleport($pos);
+            }, function (): void{});
+			return true;
+		}
+
 		return $player->teleport($pos);
 	}
 
@@ -1142,10 +1151,7 @@ class MyPlot extends PluginBase
 		return false;
 	}
 
-	/**
-	 * Changes the biome of a plot
-	 *
-	 * @api
+	 /* @api
 	 *
 	 * @param Plot $plot
 	 * @param Biome $biome
@@ -1178,16 +1184,17 @@ class MyPlot extends PluginBase
 		$plotWorld = $this->getLevelSettings($plot->levelName);
 		$world = $this->getServer()->getWorldManager()->getWorldByName($plot->levelName);
 		$chunks = $this->getPlotChunks($plot);
-		foreach($this->getPlotChunks($plot) as [$chunkX, $chunkZ, $chunk]) {
-			for($x = 0; $x < 16; ++$x){
-				for($z = 0; $z < 16; ++$z){
-					$chunkPlot = $this->getPlotByPosition(new Position(($chunkX << 4) + $x, $plotWorld->groundHeight, ($chunkZ << 4) + $z, $world));
+		foreach($chunks as $id => $chunk) {
+			$coords = explode(';', $id);
+			for($x = 0; $x < 16; ++$x) {
+				for($z = 0; $z < 16; ++$z) {
+					$chunkPlot = $this->getPlotByPosition(new Position((((int)$coords[0]) << 4) + $x, $plotWorld->groundHeight, (((int)$coords[1]) << 4) + $z, $world));
 					if($chunkPlot instanceof Plot and $chunkPlot->isSame($plot)) {
 						$chunk->setBiomeId($x, $z, $biome->getId());
 					}
 				}
 			}
-			$world->setChunk($chunkX, $chunkZ, $chunk);
+			$world->setChunk((int)$coords[0], (int)$coords[1], $chunk, false);
 		}
 		return !$failed;
 	}
